@@ -560,7 +560,9 @@ keep_probability = 0.75
 
 def build_graph(keep_prob, rnn_size, num_layers, batch_size, learning_rate, embedding_size, direction):
 
-    tf.reset_default_graph()
+    #tf.reset_default_graph()
+    from tensorflow.python.framework import ops
+    ops.reset_default_graph()
 
     # Load the model inputs
     inputs, targets, keep_prob, inputs_length, targets_length, max_target_length = model_inputs()
