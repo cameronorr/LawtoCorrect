@@ -1,23 +1,21 @@
 from spellchecker import *
 
-spell = SpellChecker('en')
+spell = SpellChecker('en')  # English language
+
+Elissa_dict = './dictionary.txt'
+spell.word_frequency.load_text_file(Elissa_dict, 'utf-8')  # txt file containing correct words we want added
 
 
-def add_word(new):
-    # word is a list of words we wanna add
-    spell.word_frequency.load_words(new)
+def cleanse():
+    dirty = open('./bad_words.txt', 'r')
+    for dirt in dirty:
+        spell.word_frequency.remove(dirt)  # removes all words we don't want as corrections
+    dirty.close()
 
 
-def remove_word(old):
-    # word is a list of words we wanna add
-    spell.word_frequency.remove_words(old)
+cleanse()
 
-
-add_word(["TensorFlow", "doesn't"])
-
-remove_word(["wee"])
-
-string = "I thinnk thst wee foud a way that desn't require TensorFlow"
+string = "I thnk I jus foun a way to do this entire thhing wittout any TensorFlow and I does't evn try"
 string = string.split()
 print(string)
 
@@ -33,3 +31,4 @@ for word in misspelled:
 
 # This model only touches words that actually have typos, context isn't really factored in.
 # Also the output is just the corrections, not the whole sentence.
+# There are other methods I gotta play with though.
