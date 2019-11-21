@@ -1,4 +1,4 @@
-﻿'foin'
-'fon'
-'wee'
-'jus'
+﻿foin
+fon
+wee
+jus
