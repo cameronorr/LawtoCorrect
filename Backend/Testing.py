@@ -19,19 +19,26 @@ def cleanse():
 cleanse()
 
 current_string = open('./input.txt', 'r', encoding='utf-8-sig')
-string = current_string.read().split()
+string = current_string.read()
+print("original text: ", string)
+string = string.split()
 current_string.close()
-print(string)
 
+correct = ""
+for word in string:
+    correct += str(spell.correction(word)) + " "
+    
+
+print("corrected text: ", correct.strip())
 # find those words that may be misspelled
-misspelled = spell.unknown(string)
+# misspelled = spell.unknown(string)
 
-for word in misspelled:
-    # Get the one "most likely" answer
-    print(spell.correction(word))
-
-    # Get a list of "likely" options
-    print(spell.candidates(word))
+# for word in misspelled:
+#     # Get the one "most likely" answer
+#     print(spell.correction(word))
+#
+#     # Get a list of "likely" options
+#     print(spell.candidates(word))
 
 # This model only touches words that actually have typos, context isn't really factored in.
 # Also the output is just the corrections, not the whole sentence.
