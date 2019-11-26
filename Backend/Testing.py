@@ -18,8 +18,9 @@ def cleanse():
 
 cleanse()
 
-string = "I thnk I jus foun a way to do this entire thhing wittout any TensorFlow and I didn't evn try"
-string = string.split()
+current_string = open('./input.txt', 'r', encoding='utf-8-sig')
+string = current_string.read().split()
+current_string.close()
 print(string)
 
 # find those words that may be misspelled
