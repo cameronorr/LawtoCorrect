@@ -1,7 +1,7 @@
 from spellchecker import *
 
 spell = SpellChecker('en')
-Elissa_dict = './dictionary.txt'
+Elissa_dict='./dictionary.txt'
 spell.word_frequency.load_text_file(Elissa_dict, 'utf-8')
 
 dirty = open('./bad_words.txt', 'r', encoding='utf-8-sig')
@@ -19,6 +19,3 @@ def new():
         print(correct)
         return correct
     print("** Word Is Already Correct**")
-
-
-new()
