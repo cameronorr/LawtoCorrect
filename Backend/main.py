@@ -9,7 +9,7 @@ junk = dirty.read().splitlines()
 dirty.close()
 spell.word_frequency.remove_words(junk)
 
-
+# TEST COMMENT
 def new():
     current_string = open('./keyLog.txt', 'r+', encoding='utf-8-sig')
     string = current_string.read()
