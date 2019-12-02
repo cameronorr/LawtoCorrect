@@ -1,21 +1,31 @@
 from pynput.keyboard import Key, Listener
 import logging
+
+from pyautogui import typewrite, hotkey
+
 log_dir = r"C:/users/Cameron/Desktop/1P03/LawtoCorrect/backend/"
 logging.basicConfig(filename=(log_dir + "keyLog.txt"), level=logging.DEBUG, format='%(message)s')
 
 keys = []
 shifted = False
+corrected
 
 
 def in_alphabet(key):
     return 32 < ord(key) < 127
 
 
-def on_press(key):
-    global keys, shifted
+def on_release(key):
+    global keys, shifted, corrected
     try:
         if key == Key.space:
             write_file(keys)
+            #corrected = autocorrect()
+            corrected = ''
+            if not corrected:
+                corrected = keys
+            hotkey('ctrl', 'del')
+            typewrite(corrected)
             keys = []
             return
         elif key == Key.backspace:
@@ -25,14 +35,14 @@ def on_press(key):
             shifted = True
             return
 
-        print(str(key).replace("'", ""))
+        # print(str(key).replace("'", ""))
         if shifted and in_alphabet(str(key).replace("'", "")):
-            keys.append(key.upper())
+            keys.append(str(key).upper())
             shifted = False
         elif shifted and not in_alphabet(str(key).replace("'", "")):
             shifted = False
         elif in_alphabet(str(key).replace("'", "")):
-            keys.append(key)
+            keys.append(str(key))
     except:
         pass
 
@@ -45,6 +55,5 @@ def write_file(keys):
             f.write(k)
 
 
-with Listener(on_press=on_press) as listener:
+with Listener(on_release=on_release) as listener:
     listener.join()
-

@@ -30,7 +30,7 @@ def autocorrect():
     #     return
 
 
-log_dir = "/Users/GerudoValley/Desktop/Ratz4Lyfe/"
+log_dir = "C:/Users/Cameron/Desktop/1P03/LawtoCorrect/Backend"
 logging.basicConfig(filename=(log_dir + "keyLog.txt"), level=logging.DEBUG, format='%(message)s')
 
 
@@ -42,7 +42,7 @@ def in_alphabet(key):
     return 32 < ord(key) < 127
 
 
-def on_release(key):
+def on_press(key):
     global keys, shifted, corrected
     try:
         if key == Key.space:
@@ -50,7 +50,8 @@ def on_release(key):
             corrected = autocorrect()
             if not corrected:
                 corrected = keys
-            hotkey('del','ctrl', 'del')
+            press('backspace')
+            hotkey('ctrl', 'backspace')
             typewrite(corrected)
             keys = []
             return
@@ -80,5 +81,5 @@ def write_file(keys):
             f.write(k)
 
 
-with Listener(on_release=on_release) as listener:
+with Listener(on_press=on_press) as listener:
     listener.join()
