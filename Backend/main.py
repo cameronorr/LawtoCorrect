@@ -1,7 +1,6 @@
 from spellchecker import SpellChecker
 from pynput.keyboard import Key, Listener
 import logging
-
 from pyautogui import typewrite, hotkey
 
 spell = SpellChecker('en')
@@ -23,11 +22,7 @@ def autocorrect():
     current_string.truncate(0)
     correct = spell.correction(string)
     if len(string) != 0 and string != correct:
-        # print(correct)
         return correct
-    # else:
-    #     print("** Word Is Already Correct**")
-    #     return
 
 
 log_dir = "/Users/GerudoValley/Desktop/Ratz4Lyfe/"
@@ -49,8 +44,10 @@ def on_release(key):
             write_file(keys)
             corrected = autocorrect()
             if not corrected:
-                corrected = keys
-            hotkey('del','ctrl', 'del')
+                keys = []
+                return
+            press('backspace')
+            hotkey('ctrl', 'backspace')
             typewrite(corrected)
             keys = []
             return
@@ -61,7 +58,7 @@ def on_release(key):
             shifted = True
             return
 
-        # print(str(key).replace("'", ""))
+
         if shifted and in_alphabet(str(key).replace("'", "")):
             keys.append(str(key).upper())
             shifted = False
