@@ -1,7 +1,6 @@
 from spellchecker import SpellChecker
 from pynput.keyboard import Key, Listener
 import logging
-
 from pyautogui import typewrite, hotkey
 
 spell = SpellChecker('en')
@@ -23,15 +22,12 @@ def autocorrect():
     current_string.truncate(0)
     correct = spell.correction(string)
     if len(string) != 0 and string != correct:
-        # print(correct)
         return correct
-    # else:
-    #     print("** Word Is Already Correct**")
-    #     return
 
 
 log_dir = "C:/Users/Cameron/Desktop/1P03/LawtoCorrect/Backend"
-logging.basicConfig(filename=(log_dir + "keyLog.txt"), level=logging.DEBUG, format='%(message)s')
+logging.basicConfig(filename=(log_dir + "keyLog.txt"),
+                    level=logging.DEBUG, format='%(message)s')
 
 
 keys = []
@@ -49,7 +45,8 @@ def on_press(key):
             write_file(keys)
             corrected = autocorrect()
             if not corrected:
-                corrected = keys
+                keys = []
+                return
             press('backspace')
             hotkey('ctrl', 'backspace')
             typewrite(corrected)
@@ -62,7 +59,6 @@ def on_press(key):
             shifted = True
             return
 
-        # print(str(key).replace("'", ""))
         if shifted and in_alphabet(str(key).replace("'", "")):
             keys.append(str(key).upper())
             shifted = False
@@ -73,6 +69,7 @@ def on_press(key):
     except:
         pass
 
+
 def write_file(keys):
     with open("keyLog.txt", "a") as f:
         f.write(" ")
@@ -81,5 +78,5 @@ def write_file(keys):
             f.write(k)
 
 
-with Listener(on_press=on_press) as listener:
+with Listener(on_release=on_release) as listener:
     listener.join()
